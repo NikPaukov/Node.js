@@ -1,12 +1,16 @@
 {
   "scripts": {
-    "start": "node index.js"
+    "start": "ts-node-esm index.ts"
   },
+  "main": "index.js",
+
+  "type": "module",
 
   "devDependencies": {
     "typescript": "^5.0.4"
   },
   "dependencies": {
     "eslint": "^8.41.0"
-  }
+  },
+  "include": ["src/**/*.ts"]
 }
