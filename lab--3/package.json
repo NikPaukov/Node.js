@@ -1,0 +1,26 @@
+{
+  "name": "lab--3",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node-esm index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "typescript": "^5.0.4"
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "compilerOptions": {
+    "moduleResolution": "node"
+  },
+  "dependencies": {
+    "systeminformation": "^5.17.16",
+    "undici": "^5.22.1"
+  }
+}
