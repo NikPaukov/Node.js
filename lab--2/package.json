@@ -2,7 +2,7 @@
   "scripts": {
     "start": "ts-node-esm index.ts"
   },
-  "main": "index.js",
+  "main": "index.ts",
 
   "type": "module",
 
