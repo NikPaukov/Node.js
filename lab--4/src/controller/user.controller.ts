@@ -1,5 +1,6 @@
 import express from "express";
 import * as userService from '../services/user.service'
+import {update} from "../services/user.service";
 
 const usersRoutes = express.Router();
 
@@ -15,7 +16,8 @@ usersRoutes.route("/:id").get((req, res)=>{
 })
 usersRoutes.route("/").post((req, res)=>{
     if(req.body.name && req.body.username){
-        userService.create(req.body);
+        const user = userService.create(req.body);
+        res.send({created:true, id:user});
         res.sendStatus(201);
         return;
     }
@@ -25,7 +27,7 @@ usersRoutes.route("/").post((req, res)=>{
 usersRoutes.route("/").put((req, res) => {
     try{
         userService.update(req.body.id, req.body);
-        res.sendStatus(200);
+        res.send({updated: true});
     } catch (e){
         res.send({error:e});
         res.sendStatus(400);

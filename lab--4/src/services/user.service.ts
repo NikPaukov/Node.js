@@ -4,6 +4,7 @@ import e from "cors";
 
 export function create(user: User) {
     userRepository.create(user);
+    return user;
 }
 
 export function getAll() {

@@ -5,6 +5,7 @@ export function create(user: User){
     user.id=uuid.randomUUID();
     //no constraints for unique users;)
     db.push(user);
+    return user;
 }
 export function getOneById(id: string){
     console.log(db.find(u=>u.id=id));
