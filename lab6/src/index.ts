@@ -29,11 +29,12 @@ app.use((req: Request, res: Response) => {
 });
 //starting server
 const PORT = +process.env.PORT || 5000;
-export const server = app.listen(PORT, () => {
-    console.warn(`Server is running on port ${PORT}`);
-});
 
 
-AppDataSource.initialize().then(async () => {
+AppDataSource.initialize().then(() => {
     console.log("Database connected!");
+    app.listen(PORT, () => {
+        console.warn(`Server is running on port ${PORT}`);
+    });
+
 }).catch(error => console.log(error))

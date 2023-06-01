@@ -11,6 +11,7 @@ export const AppDataSource = new DataSource(
         username: process.env.TYPEORM_USER,
         password: process.env.TYPEORM_PASSWORD,
         database: process.env.TYPEORM_NAME,
-            entities: ['./**/*.entity.js']
-    }
+        entities: ['./**/*.entity.ts'],
+        migrations: ['migrations/*.ts'],
+        migrationsRun:true}
 );

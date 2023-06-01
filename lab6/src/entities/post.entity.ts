@@ -1,5 +1,5 @@
 import {Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {User} from "./user.entity.js";
+import {User} from "./user.entity";
 @Entity("posts")
 export class Post{
     @PrimaryGeneratedColumn()

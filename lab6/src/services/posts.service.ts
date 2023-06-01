@@ -18,7 +18,8 @@ export async function getAll(params: { user_id?: string, page?: string, limit?: 
             relations: ["user"],
             take: limit,
             where: {user: user},
-            skip: page * limit
+            skip: page * limit,
+            order: {id: "ASC"}
         }
     );
     return {data: result, total, page, limit, prevPage: page !== 0, nextPage: total > limit * (page + 1)};
