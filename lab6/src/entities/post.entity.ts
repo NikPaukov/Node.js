@@ -1,6 +1,5 @@
 import {Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {User} from "./user.entity";
-
+import {User} from "./user.entity.js";
 @Entity("posts")
 export class Post{
     @PrimaryGeneratedColumn()
@@ -14,7 +13,8 @@ export class Post{
     @Column({nullable:false})
     text: string;
 
-    @ManyToOne(type=>User,)
+    //doesn't work in other ways;)
+    @ManyToOne(()=>User,{nullable:false})
     @JoinColumn({name:"user_id"})
     user: User;
 

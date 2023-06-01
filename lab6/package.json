@@ -20,6 +20,8 @@
    },
    "scripts": {
       "start": "node --loader ts-node/esm src/index.ts",
+      "build" : "tsc",
+      "migration:generate": "typeorm migration:generate -p -o -d build/config/data-source.js   migrations/ --name",
       "typeorm": "typeorm-ts-node-esm"
    }
 }

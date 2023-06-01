@@ -12,7 +12,7 @@ postRoutes.route("/").get(async (req, res) => {
         const result = await postService.getAll(req.query);
         res.send(result);
     } catch (e) {
-        console.log(e)
+        console.log(e);
         res.status(400).send({error: e.detail});
     }
 })

@@ -26,9 +26,9 @@ export async function getAll(params: { city?: string, age?: string, page?: strin
     return {data: result, total, page, limit, prevPage: page !== 0, nextPage: total > limit * (page + 1)};
 }
 
-export async function getById(id: string) {
+export  function getById(id: string) {
     if (!+id) throw new Error("Invalid id");
-    return (await userRepository.findBy({id: +id}))[0];
+    return userRepository.findOneBy({id: +id});
 }
 
 export function createOne(user: User) {
