@@ -17,7 +17,6 @@ export async function getAll(params: { city?: string, age?: string, page?: strin
         .createQueryBuilder("users")
         .leftJoin("posts", "p", "p.user_id=users.id")
         .where(!isNaN(searchParams.age) ? 'users.age = :age' : 'TRUE', {age: searchParams.age})
-        //just passed city here without params because of ":" in query;)
         .andWhere(searchParams.address ?
             `users.address ::jsonb @> \'{"city":"${searchParams.address.city}"}\'` : 'TRUE')
         .andWhere(searchParams.title?"p.title=:title":'true',{title:searchParams.title})

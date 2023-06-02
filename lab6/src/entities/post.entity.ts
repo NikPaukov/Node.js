@@ -5,7 +5,7 @@ export class Post{
     @PrimaryGeneratedColumn()
     id: number;
     @Column({name:"created_at",nullable:false})
-    dateCreation: Date;//sounds weired but ok; (and no time but won`t change task specifications)
+    dateCreation: Date;
 
     @Column({nullable:false, length:255})
     title: string;
@@ -13,7 +13,6 @@ export class Post{
     @Column({nullable:false})
     text: string;
 
-    //doesn't work in other ways;)
     @ManyToOne(()=>User,{nullable:false})
     @JoinColumn({name:"user_id"})
     user: User;
