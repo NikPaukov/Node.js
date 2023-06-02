@@ -18,3 +18,11 @@ export class Post{
     user: User;
 
 }
+export interface PostDto{
+    id: number;
+    dateCreation: Date;
+    title: string;
+    text: string;
+    user: User;
+
+}

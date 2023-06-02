@@ -1,49 +1,34 @@
 import {AppDataSource} from "../config/data-source";
-import {Post} from "../entities/post.entity";
+import {Post, PostDto} from "../entities/post.entity";
 import exp from "constants";
 import {User} from "../entities/user.entity";
 import * as userService from './users.service'
 
-const postRepository = AppDataSource.getRepository(Post);
+import * as postRepository from '../repositories/post.repository'
 
 export async function getAll(params: { user_id?: string, page?: string, limit?: string }) {
-    const page = +params.page || 0;
-    const limit = +params.limit || 3;
-
+    const paginationParams = {
+        page: +params.page || 0,
+        limit: +params.limit || 3
+    }
     let user
     if (params.user_id) user = (await userService.getById(params.user_id)) || undefined;
-    console.log(user);
-    const [result, total] = await postRepository.findAndCount({
-
-            relations: ["user"],
-            take: limit,
-            where: {user: user},
-            skip: page * limit,
-            order: {id: "ASC"}
-        }
-    );
-    return {data: result, total, page, limit, prevPage: page !== 0, nextPage: total > limit * (page + 1)};
+    const searchParams = {user};
+    return postRepository.getAllByUserWithPagination(searchParams, paginationParams);
 }
 
 export function getById(id: string) {
-    if (!+id) throw new Error("Invalid id");
-    return postRepository.findOne(
-        {
-            where: {id: +id},
-            relations: ["user"]
-        });
+    return postRepository.getOneById(id);
 }
 
-export function createOne(post: Post) {
-    return postRepository.save(post);
+export function createOne(post: PostDto) {
+    return postRepository.createOne(post);
 }
 
 export function deleteOne(id: string) {
-    if (!+id) throw new Error("Invalid id");
-    return postRepository.delete({id: +id});
+    return postRepository.deleteOne(id);
 }
 
-export function updateOne(id: string, data: Partial<Post>) {
-    if (!+id) throw new Error("Invalid id");
-    return postRepository.update(id, data);
+export function updateOne(id: string, data: Partial<PostDto>) {
+    return postRepository.updateOne(id, data);
 }

@@ -21,3 +21,12 @@ interface Address {
     city: string;
     street: string;
 }
+//to separate typeorm and services
+export interface UserDto{
+    id: number;
+    username: string;
+    email: string
+    age: number
+    info: string
+    address: Address
+}

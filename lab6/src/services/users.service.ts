@@ -1,47 +1,31 @@
-import {AppDataSource} from "../config/data-source";
-import {User} from "../entities/user.entity";
+import {UserDto} from "../entities/user.entity";
+import * as userRepository from '../repositories/user.repository'
 
-const userRepository = AppDataSource.getRepository(User);
-
-
-export async function getAll(params: { city?: string, age?: string, page?: string, limit?: string, title?:string }) {
-    const page = +params.page || 0;
-    const limit = +params.limit || 3;
-
+export async function getAll(params: { city?: string, age?: string, page?: string, limit?: string, title?: string }) {
+    const paginationParams = {
+        page: +params.page || 0,
+        limit: +params.limit || 3
+    }
     const searchParams = {
         age: +params.age,
         address: params.city ? {city: params.city} : undefined,
-        title: params.title||undefined
+        title: params.title || undefined
     };
-    const [result, total] = await userRepository
-        .createQueryBuilder("users")
-        .leftJoin("posts", "p", "p.user_id=users.id")
-        .where(!isNaN(searchParams.age) ? 'users.age = :age' : 'TRUE', {age: searchParams.age})
-        .andWhere(searchParams.address ?
-            `users.address ::jsonb @> \'{"city":"${searchParams.address.city}"}\'` : 'TRUE')
-        .andWhere(searchParams.title?"p.title=:title":'true',{title:searchParams.title})
-        .take(limit)
-        .skip(page * limit)
-        .orderBy({"users.id": "ASC"})
-        .getManyAndCount();
-    return {data: result, total, page, limit, prevPage: page !== 0, nextPage: total > limit * (page + 1)};
+    return userRepository.getAllByAgeOrPostTitleOrCityWithPagination(searchParams, paginationParams);
 }
 
-export  function getById(id: string) {
-    if (!+id) throw new Error("Invalid id");
-    return userRepository.findOneBy({id: +id});
+export function getById(id: string) {
+    return userRepository.getOneById(id);
 }
 
-export function createOne(user: User) {
-    return userRepository.save(user);
+export function createOne(user: UserDto) {
+    return userRepository.createOne(user);
 }
 
 export function deleteOne(id: string) {
-    if (!+id) throw new Error("Invalid id");
-    return userRepository.delete({id: +id});
+    return userRepository.deleteOne(id);
 }
 
-export function updateOne(id: string, data: Partial<User>) {
-    if (!+id) throw new Error("Invalid id");
-    return userRepository.update(id, data);
+export function updateOne(id: string, data: Partial<UserDto>) {
+    return userRepository.updateOne(id, data);
 }
