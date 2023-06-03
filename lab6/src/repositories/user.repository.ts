@@ -1,6 +1,5 @@
 import {AppDataSource} from "../config/data-source";
 import {User, UserDto} from "../entities/user.entity";
-import {StatusCodeError} from "../errors/StatusCodeError";
 
 const userRepository = AppDataSource.getRepository(User);
 

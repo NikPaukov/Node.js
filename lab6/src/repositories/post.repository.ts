@@ -1,7 +1,6 @@
 import {AppDataSource} from "../config/data-source";
 import {Post, PostDto} from "../entities/post.entity";
 import {User, UserDto} from "../entities/user.entity";
-import {StatusCodeError} from "../errors/StatusCodeError";
 
 const postRepository = AppDataSource.getRepository(Post);
 
