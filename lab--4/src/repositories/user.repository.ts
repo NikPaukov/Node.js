@@ -1,34 +1,36 @@
 import {db} from '../db'
 import {User} from '../models/User.model';
 import uuid from 'crypto'
-export function create(user: User){
-    user.id=uuid.randomUUID();
-    //no constraints for unique users;)
+
+export function create(user: User) {
+    user.id = uuid.randomUUID();
     db.push(user);
     return user;
 }
-export function getOneById(id: string){
-    console.log(db.find(u=>u.id=id));
-    console.log(db.filter(u=>u.id=id))
-    return db.find(u=>u.id=id);
+
+export function getOneById(id: string) {
+    return db.find(u => u.id = id);
 }
 
-export function getAll(){
+export function getAll() {
     return [...db];
 }
-export function deleteOne(id: string){
-    const index = db.findIndex(u=>u.id=id);
-    //should work the same even if user does not exist
+
+export function deleteOne(id: string) {
+    const index = db.findIndex(u => u.id = id);
     db.splice(index, 1);
+    return {affected: (index||index===0)?1:0};
 }
-export function updateOne(id: string, data: User){
+
+export function updateOne(id: string, data: Partial<User>) {
     const user = getOneById(id);
-    if(user){
-        let key:keyof typeof user;
-        for(key in user){
-            user[key]=data[key];
-        }
-    } else{
-        throw new Error("User not found");
+    if(data.id) data.id=undefined;
+    if (user) {
+        let key: keyof typeof user;
+        for (key in data) {
+            user[key] = data[key]||user[key];
+         }
+        return {affected: 1}
     }
+    return {affected: 0}
 }

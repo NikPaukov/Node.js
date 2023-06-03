@@ -1,6 +1,5 @@
 import express from "express";
 import * as userService from '../services/user.service'
-import {update} from "../services/user.service";
 
 const usersRoutes = express.Router();
 
@@ -9,29 +8,28 @@ usersRoutes.route("/").get((req, res)=>{
 })
 usersRoutes.route("/:id").get((req, res)=>{
     const user =userService.getOne(req.body.id);
-    if(user){
      return res.send(user);
-    }
-    res.sendStatus(400);
 })
 usersRoutes.route("/").post((req, res)=>{
     if(req.body.name && req.body.username){
         const user = userService.create(req.body);
-        res.send({created:true, id:user});
-        res.sendStatus(201);
-        return;
+        return res.status(201).send({created:true, id:user.id});
     }
     res.sendStatus(400);
 })
 
-usersRoutes.route("/").put((req, res) => {
+usersRoutes.route("/:id").path((req, res) => {
     try{
-        userService.update(req.body.id, req.body);
-        res.send({updated: true});
+        const result = userService.update(req.params.id, req.body);
+        res.send(result);
     } catch (e){
         res.send({error:e});
         res.sendStatus(400);
     }
 
-})
+});
+usersRoutes.route("/:id").delete((req,res)=>{
+    const result = usersRoutes.delete(req.params.id);
+    res.send(result);
+});
 export default usersRoutes;

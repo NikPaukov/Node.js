@@ -1,10 +1,9 @@
 import * as userRepository from '../repositories/user.repository'
 import {User} from "../models/User.model";
-import e from "cors";
 
 export function create(user: User) {
-    userRepository.create(user);
-    return user;
+    return userRepository.create(user);
+
 }
 
 export function getAll() {
@@ -16,7 +15,7 @@ export function getOne(id: string) {
 }
 
 export function update(id: string, user: User) {
-    userRepository.updateOne(id, user);
+    return userRepository.updateOne(id, user);
 }
 
 export function deleteOne(id: string) {
