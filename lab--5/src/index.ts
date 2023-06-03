@@ -1,5 +1,5 @@
-import {execute} from "./src/db";
-import * as queries from './src/queries';
+import {execute} from "./db";
+import * as queries from './queries';
 
 const task3Name = 'Stephanie Bulger';
 const task4Id = "79f6ce8f-ee0c-4ef5-9c36-da06b7f4cb76";

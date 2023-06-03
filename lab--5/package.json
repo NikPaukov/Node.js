@@ -2,10 +2,10 @@
   "name": "lab--5",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start": "ts-node-esm index.ts"
+    "start": "ts-node-esm src/index.ts"
   },
   "include": [
     "src/**/*.ts"

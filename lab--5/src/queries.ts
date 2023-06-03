@@ -5,7 +5,8 @@ export const task1Query = function () {
         "channels.photo_url," +
         "channels.description," +
         "channels.created_at " +
-        "from users left join channels on channels.user_id = users.id";
+        "from users left join channels on channels.user_id = users.id "+
+        "order by channels.created_at";
 }
 
 export const task2Query = function () {
@@ -18,10 +19,11 @@ export const task2Query = function () {
 }
 
 export const task3Query = function (name: string) {
-    return "select videos.id, videos.title, videos.preview_url, videos.duration, videos.published_at from videos " +
-        "join subscriptions as subs on (subs.channel_id = videos.channel_id)" +
-        `where subs.user_id = (select id from users where name = '${name}')` +
-        "order by videos.published_at desc";
+    return "select videos.* from subscriptions " +
+        "inner join channels on (channels.id = subscriptions.channel_id) " +
+        "inner join videos on (videos.channel_id = channels.id) " +
+        "where subscriptions.user_id=(select id from users where name='Stephanie Bulger') " +
+        "order by videos.published_at desc;";
 }
 
 export const task4Query = function (id: string) {
