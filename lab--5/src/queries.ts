@@ -20,8 +20,7 @@ export const task2Query = function () {
 
 export const task3Query = function (name: string) {
     return "select videos.* from subscriptions " +
-        "inner join channels on (channels.id = subscriptions.channel_id) " +
-        "inner join videos on (videos.channel_id = channels.id) " +
+        "inner join videos on (videos.channel_id = subscriptions.channel_id) " +
         "where subscriptions.user_id=(select id from users where name='Stephanie Bulger') " +
         "order by videos.published_at desc;";
 }
